@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.allocate.db.Task;
 
@@ -42,12 +43,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         mTasks = new ArrayList<>();
-
-        mTasks.add(new Task(3,"Test1"));
-        mTasks.add(new Task(3,"Test2"));
-        mTasks.add(new Task(3,"Test3"));
-        mTasks.add(new Task(3,"Test4"));
-        mTasks.add(new Task(3,"Test5"));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
@@ -86,11 +81,15 @@ public class MainActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 Log.d("MainActivity", input.getText().toString());
                 mTasks.add(new Task(mTasks.size(), input.getText().toString()));
+
+                String text = "Task added!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getApplicationContext(),text,duration);
+                toast.show();
             }
         });
 
         builder.setNegativeButton("Cancel", null);
-
         builder.create().show();
     }
 
