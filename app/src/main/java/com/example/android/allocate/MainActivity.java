@@ -9,10 +9,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,13 +35,13 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private List<Task> mTasks;
     private RecyclerView mRecyclerView;
     private FloatingActionButton fab;
-    private Button done;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,9 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
+
+        toolbar = (Toolbar) findViewById(R.id.main_bar);
+        setSupportActionBar(toolbar);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -68,29 +75,26 @@ public class MainActivity extends Activity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id==R.id.action_settings){
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void addTask() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Add task");
-        builder.setMessage("What's your task?");
-
-        final EditText input = new EditText(this);
-        builder.setView(input);
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d("MainActivity", input.getText().toString());
-                mTasks.add(new Task(mTasks.size(), input.getText().toString()));
-
-                String text = "Task added!";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(getApplicationContext(),text,duration);
-                toast.show();
-            }
-        });
-
-        builder.setNegativeButton("Cancel", null);
-        builder.create().show();
+        Intent intent  = new Intent(this, AddTaskActivity.class);
+        startActivity(intent);
     }
 
     public void doneTask(View v) {

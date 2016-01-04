@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Allocate</string>
     <string name="action_settings">Settings</string>
+    <string name="task_name">Enter Task Name</string>
+    <string name="task_description">Enter Task Name</string>
+
 </resources>
