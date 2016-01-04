@@ -5,15 +5,16 @@ import android.provider.BaseColumns;
 /**
  * Created by Dooj on 2015-12-30.
  */
-public class TaskContract {
-    public static final String DB_NAME = "com.example.allocate.db.tasks";
-    public static final int DB_VERSION = 1;
-    public static final String TABLE = "tasks";
+public final class TaskContract {
+    // To prevent someone from accidentally instantiating the contract class,
+    // give it an empty constructor.
+    public TaskContract() {}
 
-
-    public class Columns {
-        public static final String KEY_ID = "ID";
-        public static final String KEY_TASKNAME = "NAME";
-        public static final String KEY_STATUS = "STATUS";
+    public static abstract class TaskEntry implements BaseColumns {
+        public static final String TABLE_NAME = "entry";
+        public static final String COLUMN_NAME_ENTRY_ID = "entryID";
+        public static final String COLUMN_NAME_TITLE = "title";
+        public static final String COLUMN_NAME_DESCRIPTION = "description";
+        public static final String COLUMN_NAME_STATUS = "status";
     }
 }

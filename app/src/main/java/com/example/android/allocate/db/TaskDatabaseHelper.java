@@ -3,8 +3,10 @@ package com.example.android.allocate.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.SyncStateContract;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -14,8 +16,28 @@ import java.util.List;
  * Created by Dooj on 2015-12-25.
  */
 public class TaskDatabaseHelper extends SQLiteOpenHelper{
+    private static final String INT_TYPE = " INTEGER";
+    private static final String TEXT_TYPE = " TEXT";
+    private static final String BOOLEAN_TYPE = " TEXT";
+    private static final String COMMA_SEP = ",";
+
+    private static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + TaskContract.TaskEntry.TABLE_NAME;
+
+    private static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE " + TaskContract.TaskEntry.TABLE_NAME + " (" +
+                    TaskContract.TaskEntry._ID + " INTEGER PRIMARY KEY," +
+                    TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + INT_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_STATUS + BOOLEAN_TYPE +
+                    " )";
+
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "Task.db";
+
     public TaskDatabaseHelper(Context context) {
-        super(context, TaskContract.DB_NAME, null, TaskContract.DB_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     /**
@@ -25,25 +47,99 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlQuery =
-                String.format("CREATE TABLE %s(" +
-                        "%s INT PRIMARY KEY NOT NULL" +
-                        "%s TEXT NOT NULL" +
-                        "%s BOOLEAN NOT NULL"
-                        , TaskContract.DB_NAME
-                        , TaskContract.Columns.KEY_ID
-                        , TaskContract.Columns.KEY_TASKNAME
-                        , TaskContract.Columns.KEY_STATUS
-                );
 
-        Log.d("TaskDBHelper", "Query to form table: " + sqlQuery);
+        Log.d("TaskDBHelper", "Query to form table: " + SQL_CREATE_ENTRIES);
 
-        db.execSQL(sqlQuery);
+        db.execSQL(SQL_CREATE_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TaskContract.TABLE);
+        db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
+    }
+
+    public boolean insertTask(int id, String title, String description, boolean status){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID,id);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,status);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,title);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,description);
+
+        long newRowId;
+        newRowId = db.insert(
+                TaskContract.TaskEntry.TABLE_NAME,
+                null,
+                contentValues);
+        return true;
+    }
+
+    public Cursor getData(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "select * from contacts where TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID =" +
+                id + ""
+                ,null
+        );
+        return res;
+    }
+
+    public int numberOfEntries() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int numEntries = (int) DatabaseUtils.queryNumEntries(db, TaskContract.TaskEntry.TABLE_NAME);
+        return numEntries;
+    }
+
+    public boolean updateContact (int id, String title, String description, Boolean status)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID,id);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,status);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,title);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,description);
+
+        db.update(
+                TaskContract.TaskEntry.TABLE_NAME,
+                contentValues,
+                TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " = ? ",
+                new String[] { Integer.toString(id) } );
+        return true;
+    }
+
+    public Integer deleteTask(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(
+                TaskContract.TaskEntry.TABLE_NAME,
+                TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " = ? ",
+                new String[] { Integer.toString(id) } );
+    }
+
+    public ArrayList<Task> getAllTasks() {
+        ArrayList<Task> taskArrayList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + TaskContract.TaskEntry.TABLE_NAME,null);
+        res.moveToFirst();
+
+        while(res.moveToNext()){
+            taskArrayList.add(new Task(
+                    res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID)),
+                    res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TITLE)),
+                    res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION)),
+                    res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_STATUS)) != 0
+                    )
+            );
+        }
+
+        return taskArrayList;
     }
 }

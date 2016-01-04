@@ -8,16 +8,17 @@ import android.os.CountDownTimer;
 public class Task {
     private boolean isComplete;
     private String taskName;
+    private String description;
     private int id;
 
     public Task() {
     }
 
-    public Task(int id, String taskName) {
+    public Task(int id, String taskName, String description, boolean status) {
         this.taskName = taskName;
         this.id = id;
-        isComplete = false;
-
+        this.description = description;
+        isComplete = status;
     }
 
     public boolean isComplete() {

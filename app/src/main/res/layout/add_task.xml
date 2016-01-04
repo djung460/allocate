@@ -6,19 +6,40 @@
 
     <include
         android:id="@+id/task_bar"
-        layout="@layout/add_tool_bar">
+        layout="@layout/tool_bar">
     </include>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="56dp"
+        android:textColor="@android:color/primary_text_dark">
 
         <EditText
             android:id="@+id/task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/task_name"
-            />
+            android:focusable="true"
+            android:hint="@string/task_title"
+            android:textSize="45sp" />
     </android.support.design.widget.TextInputLayout>
+
+
+    <EditText
+        android:id="@+id/task_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="48dp"
+        android:hint="@string/task_description" />
+
+
 </LinearLayout>
