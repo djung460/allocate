@@ -32,6 +32,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:src = "@drawable/ic_add_black_48dp"
+        android:tint ="@android:color/white"
         app:backgroundTint="@color/colorAccent"/>
 
 </RelativeLayout>
