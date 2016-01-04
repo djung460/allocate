@@ -97,7 +97,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         return numEntries;
     }
 
-    public boolean updateContact (int id, String title, String description, Boolean status)
+    public boolean updateTask (int id, String title, String description, Boolean status)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -130,7 +130,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         Cursor res = db.rawQuery("select * from " + TaskContract.TaskEntry.TABLE_NAME,null);
         res.moveToFirst();
 
-        while(res.moveToNext()){
+        while(!res.isAfterLast()) {
             taskArrayList.add(new Task(
                     res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID)),
                     res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TITLE)),
@@ -138,8 +138,14 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
                     res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_STATUS)) != 0
                     )
             );
+            res.moveToNext();
         }
 
         return taskArrayList;
+    }
+
+    public void clearTasks() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TaskContract.TaskEntry.TABLE_NAME);
     }
 }

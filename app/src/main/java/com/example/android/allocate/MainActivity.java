@@ -85,9 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mTasks.clear();
-        mTasks.addAll(mDbHelper.getAllTasks());
-        mAdapter.notifyDataSetChanged();
+        refresh();
     }
 
     @Override
@@ -98,13 +96,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if(id==R.id.action_settings){
-            return true;
+        switch(item.getItemId()){
+            case R.id.action_settings :
+                break;
+            case R.id.action_clear :
+                mDbHelper.clearTasks();
+                refresh();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refresh() {
+        mTasks.clear();
+        mTasks.addAll(mDbHelper.getAllTasks());
+        mAdapter.notifyDataSetChanged();
     }
 
     public void startAddTaskActivity() {
