@@ -5,5 +5,5 @@
     <string name="task_title">Title</string>
     <string name="task_description">Description</string>
     <string name="action_clear">Clear</string>
-
+    <string name="tasks">Tasks</string>
 </resources>

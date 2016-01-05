@@ -10,7 +10,7 @@
         android:layout_height="48dp"
         android:textSize="24sp"
         android:id = "@+id/text_view_heading"
-        android:text="This is a sample task"
+        android:text="Test input"
         android:textColor="@android:color/black"
         android:layout_alignBottom="@+id/button_done"
         android:gravity="center_vertical"/>

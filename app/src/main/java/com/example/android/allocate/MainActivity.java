@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //Specifying an adapter
-        mAdapter = new TaskAdapter(mTasks);
+        mAdapter = new TaskAdapter(this,mTasks);
         mRecyclerView.setAdapter(mAdapter);
 
         fab = (FloatingActionButton) findViewById(R.id.fab_add);
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_clear :
                 mDbHelper.clearTasks();
+                Toast.makeText(this, "Tasks Cleared", Toast.LENGTH_SHORT).show();
                 refresh();
                 break;
         }
@@ -113,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
         mTasks.clear();
         mTasks.addAll(mDbHelper.getAllTasks());
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void doneTask(View v) {
+        refresh();
     }
 
     public void startAddTaskActivity() {

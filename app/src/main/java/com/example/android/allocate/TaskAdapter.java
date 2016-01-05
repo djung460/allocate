@@ -3,7 +3,9 @@ package com.example.android.allocate;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Entity;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +16,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.allocate.db.Task;
+import com.example.android.allocate.db.TaskDatabaseHelper;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private List<Task> mDataset;
+    private Context context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -41,11 +45,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public void remove(Task item) {
         int position = mDataset.indexOf(item);
         mDataset.remove(position);
+        TaskDatabaseHelper db = new TaskDatabaseHelper(context);
+        db.deleteTask(item.getId());
         notifyItemRemoved(position);
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public TaskAdapter(List<Task> myDataset) {
+    public TaskAdapter(Context context,List<Task> myDataset) {
+        this.context = context;
         mDataset = myDataset;
     }
 
@@ -67,6 +74,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         final Task task = mDataset.get(position);
         holder.txtHeader.setText(mDataset.get(position).getTaskName());
+
         holder.doneButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
