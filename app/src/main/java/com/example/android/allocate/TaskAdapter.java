@@ -1,97 +1,59 @@
 package com.example.android.allocate;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
-import android.content.Entity;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.TextView;
+import com.example.android.allocate.ViewHolders.TaskViewHolder;
+import com.example.android.allocate.task.Task;
 
-import com.example.android.allocate.db.Task;
-import com.example.android.allocate.db.TaskDatabaseHelper;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
+public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     private List<Task> mDataset;
-    private Context context;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView txtHeader;
-        public Button doneButton;
-
-        public ViewHolder(View v) {
-            super(v);
-            txtHeader = (TextView) v.findViewById(R.id.text_view_heading);
-            doneButton = (Button) v.findViewById(R.id.button_done);
-        }
+    public TaskAdapter(List<Task> dataset){
+        mDataset = dataset;
     }
 
-    public void add(int position, Task item) {
-        mDataset.add(position, item);
-        notifyItemInserted(position);
-    }
-
-    public void remove(Task item) {
-        int position = mDataset.indexOf(item);
-        mDataset.remove(position);
-        TaskDatabaseHelper db = new TaskDatabaseHelper(context);
-        db.deleteTask(item.getId());
-        notifyItemRemoved(position);
-    }
-
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public TaskAdapter(Context context,List<Task> myDataset) {
-        this.context = context;
-        mDataset = myDataset;
-    }
-
-    // Create new views (invoked by the layout manager)
     @Override
-    public TaskAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_view, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
+    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_task_parent,parent,false);
+
+        TaskViewHolder vh = new TaskViewHolder(v);
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        final Task task = mDataset.get(position);
-        holder.txtHeader.setText(mDataset.get(position).getTaskName());
+    public void onBindViewHolder(TaskViewHolder holder, int position) {
+        Task task = mDataset.get(position);
+        long millis = task.getTimeLeft();
 
-        holder.doneButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove(task);
-            }
-        });
+        holder.mTaskTitle.setText(task.getTitle());
+
+        holder.mTaskTimeRemaining.setText(
+                String.format("%2d:%2d:%2d",
+                        TimeUnit.MILLISECONDS.toHours(millis),
+                        TimeUnit.MILLISECONDS.toMinutes(millis) -
+                                TimeUnit.MINUTES.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                        TimeUnit.MILLISECONDS.toSeconds(millis) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+                )
+        );
+
+        if(task.isRunning())
+            holder.mStartStop.setBackgroundResource(R.drawable.ic_play_circle_outline_black_48dp);
+        else
+            holder.mStartStop.setBackgroundResource(R.drawable.ic_pause_circle_outline_black_48dp);
+
+        holder.mTaskDescription.setText(task.getExpandedTask().getDescription());
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
-
-    public void updateTasks(List<Task> tasks){
-        this.mDataset = tasks;
-        notifyDataSetChanged();
-    }
-
-} 
+}

@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
+import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.example.android.allocate.db.TaskDatabaseHelper;
 
 /**
@@ -23,6 +25,11 @@ public class AddTaskActivity extends AppCompatActivity {
     private TaskDatabaseHelper mDbHelper;
     private EditText editTextTitle;
     private EditText editTextDescription;
+    private EditText editTextHmsInput;
+
+    private static final int HOURS_TO_MILLIS = 3600000;
+    private static final int MINUTES_TO_MILLIS = 60000;
+    private static final int SECONDS_TO_MILLIS = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +43,10 @@ public class AddTaskActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.task_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Add Task");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setTitle("Add Task");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        editTextHmsInput = (EditText) findViewById(R.id.hms_field);
 
         Intent intent = getIntent();
     }
@@ -66,7 +75,15 @@ public class AddTaskActivity extends AppCompatActivity {
     private void addTask() {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
-        mDbHelper.insertTask(title.hashCode() + description.hashCode(), title, description ,false );
+        String hms_input=editTextHmsInput.getText().toString();
+
+        int hours = Integer.parseInt(hms_input.substring(0, 2));
+        int minutes = Integer.parseInt(hms_input.substring(2, 4));
+        int seconds = Integer.parseInt(hms_input.substring(4,6));
+
+        long timeInitial = hours*HOURS_TO_MILLIS + minutes*MINUTES_TO_MILLIS + seconds*SECONDS_TO_MILLIS;
+
+        mDbHelper.insertTask(title.hashCode() + description.hashCode(), title, description, false, timeInitial);
     }
 
     /**

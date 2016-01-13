@@ -16,5 +16,7 @@ public final class TaskContract {
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_DESCRIPTION = "description";
         public static final String COLUMN_NAME_STATUS = "status";
+        public static final String COLUMN_NAME_TIMELEFT = "timeLeft";
+        public static final String COLUMN_NAME_DAYSOFWEEK = "daysOfWeek";
     }
 }

@@ -6,11 +6,11 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.SyncStateContract;
 import android.util.Log;
 
+import com.example.android.allocate.task.Task;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Dooj on 2015-12-25.
@@ -18,7 +18,7 @@ import java.util.List;
 public class TaskDatabaseHelper extends SQLiteOpenHelper{
     private static final String INT_TYPE = " INTEGER";
     private static final String TEXT_TYPE = " TEXT";
-    private static final String BOOLEAN_TYPE = " TEXT";
+    private static final String BOOLEAN_TYPE = " BOOLEAN";
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -30,8 +30,9 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
                     TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + INT_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
-                    TaskContract.TaskEntry.COLUMN_NAME_STATUS + BOOLEAN_TYPE +
-                    " )";
+                    TaskContract.TaskEntry.COLUMN_NAME_STATUS + BOOLEAN_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT + INT_TYPE +
+                    ")";
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Task.db";
@@ -64,7 +65,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public boolean insertTask(int id, String title, String description, boolean status){
+    public boolean insertTask(int id, String title, String description, boolean status, long timeLeft){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -72,6 +73,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,status);
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,title);
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,description);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, timeLeft);
 
         long newRowId;
         newRowId = db.insert(
@@ -97,7 +99,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         return numEntries;
     }
 
-    public boolean updateTask (int id, String title, String description, Boolean status)
+    public boolean updateTask (int id, String title, long timeLeft, String description, Boolean status)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -106,6 +108,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,status);
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,title);
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,description);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, timeLeft);
 
         db.update(
                 TaskContract.TaskEntry.TABLE_NAME,
@@ -130,14 +133,16 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         Cursor res = db.rawQuery("select * from " + TaskContract.TaskEntry.TABLE_NAME,null);
         res.moveToFirst();
 
-        while(!res.isAfterLast()) {
+        while(!res.isAfterLast() && numberOfEntries() != 0) {
             taskArrayList.add(new Task(
                     res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID)),
                     res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TITLE)),
                     res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION)),
-                    res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_STATUS)) != 0
+                    res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_STATUS)) != 0,
+                    res.getLong(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT))
                     )
             );
+
             res.moveToNext();
         }
 

@@ -12,11 +12,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="56dp"
+        android:layout_margin="16dp"
         android:textColor="@android:color/primary_text_dark">
 
         <EditText
@@ -33,13 +29,38 @@
         android:id="@+id/task_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="48dp"
+        android:layout_margin="16dp"
         android:hint="@string/task_description" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="16dp">
+
+        <ImageView
+            android:id="@+id/hourglass_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:padding="4dp"
+            android:src="@drawable/ic_hourglass_empty_2x" />
+
+        <EditText
+            android:id="@+id/hms_field"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_gravity="center_vertical"
+            android:hint="00:00:00"
+            android:textSize="36sp"
+            android:layout_toRightOf="@id/hourglass_image"
+            android:layout_toEndOf="@id/hourglass_image"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            android:inputType="numberDecimal"/>
+    </RelativeLayout>
 
 </LinearLayout>
