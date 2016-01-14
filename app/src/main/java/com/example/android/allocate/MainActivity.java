@@ -1,25 +1,25 @@
 package com.example.android.allocate;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.example.android.allocate.db.TaskDatabaseHelper;
 import com.example.android.allocate.db.TaskHandler;
-import com.example.android.allocate.task.ExpandedTask;
 import com.example.android.allocate.task.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,12 +69,48 @@ public class MainActivity extends AppCompatActivity {
                 startAddTaskActivity();
             }
         });
+
+        //Start timer
+        startService(new Intent(this, TimerBroadcastService.class));
+        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
     }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mTaskHandler.tick();
+        }
+    };
 
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(mBroadcastReceiver, new IntentFilter(TimerBroadcastService.COUNTDOWN_BROADCAST));
         mTaskHandler.refresh();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mBroadcastReceiver);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, TimerBroadcastService.class));
+        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Stopped service");
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStop() {
+        try {
+            unregisterReceiver(mBroadcastReceiver);
+        } catch (Exception e) {
+            // Receiver was probably already stopped in onPause()
+        }
+        super.onStop();
     }
 
     @Override
@@ -91,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_clear :
                 mTaskHandler.clearTask();
+                Toast.makeText(MainActivity.this, "Task Cleared", Toast.LENGTH_SHORT).show();
                 break;
         }
 

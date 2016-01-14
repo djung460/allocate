@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.android.allocate.ViewHolders.TaskViewHolder;
 import com.example.android.allocate.db.TaskDatabaseHelper;
+import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
 
 import java.util.List;
@@ -15,9 +16,11 @@ import java.util.concurrent.TimeUnit;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     private List<Task> mDataset;
+    private TaskHandler mTaskHandler;
 
-    public TaskAdapter(List<Task> dataset){
+    public TaskAdapter(List<Task> dataset, TaskHandler taskHandler){
         mDataset = dataset;
+        mTaskHandler = taskHandler;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     @Override
     public void onBindViewHolder(TaskViewHolder holder, final int position) {
         final int pos = position;
-        Task task = mDataset.get(position);
+        final Task task = mDataset.get(position);
         long millis = task.getTimeLeft();
 
         holder.mTaskTitle.setText(task.getTitle());
@@ -58,6 +61,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             @Override
             public void onClick(View v) {
                 mDataset.remove(pos);
+                mTaskHandler.deleteTask(task);
                 notifyDataSetChanged();
             }
         });
@@ -66,6 +70,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             @Override
             public void onClick(View v) {
                 mDataset.get(position).resetTimeLeft();
+                mTaskHandler.updateTask(task);
+                notifyDataSetChanged();
+
+            }
+        });
+
+        holder.mStartStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mDataset.get(position).isRunning()){
+                    mDataset.get(position).pause();
+                } else {
+                    mDataset.get(position).start();
+                }
                 notifyDataSetChanged();
             }
         });

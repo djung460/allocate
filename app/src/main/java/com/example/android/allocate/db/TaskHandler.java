@@ -19,7 +19,7 @@ public class TaskHandler {
     public TaskHandler(Context context) {
         mTaskDatabaseHelper = new TaskDatabaseHelper(context);
         mDataset = mTaskDatabaseHelper.getAllTasks();
-        mTaskAdapter = new TaskAdapter(mDataset);
+        mTaskAdapter = new TaskAdapter(mDataset, this);
     }
 
     public TaskDatabaseHelper getTaskDatabaseHelper() {
@@ -44,9 +44,30 @@ public class TaskHandler {
         refresh();
     }
 
+    public void deleteTask(Task task) {
+        mTaskDatabaseHelper.deleteTask(task.getId());
+        refresh();
+    }
+
+    public void updateTask(Task task) {
+        mTaskDatabaseHelper.updateTask(task);
+        refresh();
+    }
+
     public void refresh() {
         mDataset.clear();
         mDataset.addAll(mTaskDatabaseHelper.getAllTasks());
         mTaskAdapter.notifyDataSetChanged();
+    }
+
+    //TODO FIX THIS METHOD CAN'T RUN TWO TIMERS AT ONCE UPDATE DATABASE ONLY ON PAUSE
+    public void tick() {
+        for(Task t : mDataset){
+            if(t.isRunning()){
+                t.setTimeLeft(t.getTimeLeft() - 1000);
+                mTaskAdapter.notifyDataSetChanged();
+            }
+        }
+
     }
 }

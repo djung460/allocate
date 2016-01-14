@@ -29,6 +29,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.allocate.MainActivity" />
         </activity>
+
+        <service android:name=".TimerBroadcastService" />
+
     </application>
 
 </manifest>

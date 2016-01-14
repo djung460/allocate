@@ -71,7 +71,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,task.getStatus());
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,task.isRunning());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,task.getTitle());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,task.getExpandedTask().getDescription());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, task.getTimeLeft());
@@ -107,7 +107,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,task.getStatus());
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,task.isRunning());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,task.getTitle());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,task.getExpandedTask().getDescription());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, task.getTimeLeft());
