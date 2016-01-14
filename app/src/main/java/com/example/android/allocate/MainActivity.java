@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.example.android.allocate.db.TaskDatabaseHelper;
+import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.ExpandedTask;
 import com.example.android.allocate.task.Task;
 
@@ -40,14 +41,17 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Toolbar toolbar;
 
+    private TaskHandler mTaskHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
 
-        mDbHelper = new TaskDatabaseHelper(this);
-        mTasks = mDbHelper.getAllTasks();
+        mTaskHandler = new TaskHandler(this);
+
+//        mDbHelper = new TaskDatabaseHelper(this);
+//        mTasks = mDbHelper.getAllTasks();
 
         toolbar = (Toolbar) findViewById(R.id.main_bar);
         setSupportActionBar(toolbar);
@@ -60,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mTaskAdapter = new TaskAdapter(mTasks);
-        mRecyclerView.setAdapter(mTaskAdapter);
+//        mRecyclerView.setAdapter(mTaskAdapter);
+        mRecyclerView.setAdapter(mTaskHandler.getTaskAdapter());
 
         fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        refresh();
+        mTaskHandler.refresh();
     }
 
     @Override
@@ -90,23 +95,22 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings :
                 break;
             case R.id.action_clear :
-                mDbHelper.clearTasks();
-                refresh();
+                mTaskHandler.clearTask();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void refresh() {
-        mTasks.clear();
-        mTasks.addAll(mDbHelper.getAllTasks());
-        mTaskAdapter.notifyDataSetChanged();
-    }
-
-    private void doneTask(View v) {
-        refresh();
-    }
+//    private void refresh() {
+//        mTasks.clear();
+//        mTasks.addAll(mDbHelper.getAllTasks());
+//        mTaskAdapter.notifyDataSetChanged();
+//    }
+//
+//    private void doneTask(View v) {
+//        refresh();
+//    }
 
     public void startAddTaskActivity() {
         Intent intent  = new Intent(this, AddTaskActivity.class);

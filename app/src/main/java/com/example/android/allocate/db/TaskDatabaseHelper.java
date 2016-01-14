@@ -65,15 +65,15 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public boolean insertTask(int id, String title, String description, boolean status, long timeLeft){
+    public boolean insertTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID,id);
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,status);
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,title);
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,description);
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, timeLeft);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,task.getStatus());
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,task.getTitle());
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,task.getExpandedTask().getDescription());
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, task.getTimeLeft());
 
         long newRowId;
         newRowId = db.insert(

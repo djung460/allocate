@@ -16,13 +16,15 @@ import android.widget.TimePicker;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.example.android.allocate.db.TaskDatabaseHelper;
+import com.example.android.allocate.db.TaskHandler;
+import com.example.android.allocate.task.Task;
 
 /**
  * Created by Dooj on 2016-01-03.
  */
 public class AddTaskActivity extends AppCompatActivity {
-    private Toolbar toolbar;
-    private TaskDatabaseHelper mDbHelper;
+//    private TaskDatabaseHelper mDbHelper;
+    private TaskHandler mTaskHandler;
     private EditText editTextTitle;
     private EditText editTextDescription;
     private EditText editTextHmsInput;
@@ -35,13 +37,13 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
-
-        mDbHelper = new TaskDatabaseHelper(this);
+        mTaskHandler = new TaskHandler(this);
+        //mDbHelper = new TaskDatabaseHelper(this);
 
         editTextTitle = (EditText) findViewById(R.id.task_name);
         editTextDescription = (EditText) findViewById(R.id.task_description);
 
-        toolbar = (Toolbar) findViewById(R.id.task_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.task_bar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle("Add Task");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,8 +84,8 @@ public class AddTaskActivity extends AppCompatActivity {
         int seconds = Integer.parseInt(hms_input.substring(4,6));
 
         long timeInitial = hours*HOURS_TO_MILLIS + minutes*MINUTES_TO_MILLIS + seconds*SECONDS_TO_MILLIS;
-
-        mDbHelper.insertTask(title.hashCode() + description.hashCode(), title, description, false, timeInitial);
+        Task task = new Task(title.hashCode() + description.hashCode(), title, description, false, timeInitial);
+        mTaskHandler.addTask(task);
     }
 
     /**
