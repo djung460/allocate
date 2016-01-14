@@ -84,7 +84,7 @@ public class AddTaskActivity extends AppCompatActivity {
         int seconds = Integer.parseInt(hms_input.substring(4,6));
 
         long timeInitial = hours*HOURS_TO_MILLIS + minutes*MINUTES_TO_MILLIS + seconds*SECONDS_TO_MILLIS;
-        Task task = new Task(title.hashCode() + description.hashCode(), title, description, false, timeInitial);
+        Task task = new Task(title.hashCode() + description.hashCode(), title, description, false, timeInitial,timeInitial);
         mTaskHandler.addTask(task);
     }
 

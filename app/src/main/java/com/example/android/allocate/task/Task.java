@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Dooj on 2015-12-25.
  */
-public class Task implements ParentListItem{
+public class Task {
     private boolean mStatus;
     private boolean mRunning;
     private String mTitle;
@@ -23,16 +23,12 @@ public class Task implements ParentListItem{
     private ExpandedTask mExpandedTask;
     //TODO IMPLEMENT A TIMER
 
-    private List<ExpandedTask> mExpandedTaskList;
-
-    public Task(int id, String title, String description, boolean status, long time ) {
+    public Task(int id, String title, String description, boolean status, long timeLeft, long initialTime ) {
         mTitle = title;
         mId = id;
-        mInitialTime = time;
-        mTimeLeft = time;
+        mInitialTime = initialTime;
+        mTimeLeft = timeLeft;
         mExpandedTask = new ExpandedTask(description);
-        mExpandedTaskList = new ArrayList<>();
-        mExpandedTaskList.add(mExpandedTask);
         mStatus = status;
     }
 
@@ -64,22 +60,8 @@ public class Task implements ParentListItem{
         return mId;
     }
 
-
-    public List<ExpandedTask> getExpandedTaskList() {
-        return mExpandedTaskList;
+    public void resetTimeLeft() {
+        mTimeLeft = mInitialTime;
     }
 
-    public void setExpandedTaskList(List<ExpandedTask> list) {
-        mExpandedTaskList = list;
-    }
-
-    @Override
-    public List<ExpandedTask> getChildItemList() {
-        return mExpandedTaskList;
-    }
-
-    @Override
-    public boolean isInitiallyExpanded() {
-        return false;
-    }
 }

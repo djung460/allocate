@@ -50,10 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTaskHandler = new TaskHandler(this);
 
-//        mDbHelper = new TaskDatabaseHelper(this);
-//        mTasks = mDbHelper.getAllTasks();
-
-        toolbar = (Toolbar) findViewById(R.id.main_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Allocate");
 
@@ -63,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mTaskAdapter = new TaskAdapter(mTasks);
-//        mRecyclerView.setAdapter(mTaskAdapter);
         mRecyclerView.setAdapter(mTaskHandler.getTaskAdapter());
 
         fab = (FloatingActionButton) findViewById(R.id.fab_add);
@@ -101,16 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-//    private void refresh() {
-//        mTasks.clear();
-//        mTasks.addAll(mDbHelper.getAllTasks());
-//        mTaskAdapter.notifyDataSetChanged();
-//    }
-//
-//    private void doneTask(View v) {
-//        refresh();
-//    }
 
     public void startAddTaskActivity() {
         Intent intent  = new Intent(this, AddTaskActivity.class);

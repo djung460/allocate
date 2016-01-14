@@ -29,7 +29,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(TaskViewHolder holder, int position) {
+    public void onBindViewHolder(TaskViewHolder holder, final int position) {
         final int pos = position;
         Task task = mDataset.get(position);
         long millis = task.getTimeLeft();
@@ -58,6 +58,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             @Override
             public void onClick(View v) {
                 mDataset.remove(pos);
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.mResetTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDataset.get(position).resetTimeLeft();
                 notifyDataSetChanged();
             }
         });
