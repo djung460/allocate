@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.android.allocate.ViewHolders.TaskViewHolder;
+import com.example.android.allocate.db.TaskDatabaseHelper;
 import com.example.android.allocate.task.Task;
 
 import java.util.List;
@@ -29,27 +30,37 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
 
     @Override
     public void onBindViewHolder(TaskViewHolder holder, int position) {
+        final int pos = position;
         Task task = mDataset.get(position);
         long millis = task.getTimeLeft();
 
         holder.mTaskTitle.setText(task.getTitle());
 
         holder.mTaskTimeRemaining.setText(
-                String.format("%2d:%2d:%2d",
+                String.format("%02d:%02d:%02d",
                         TimeUnit.MILLISECONDS.toHours(millis),
                         TimeUnit.MILLISECONDS.toMinutes(millis) -
-                                TimeUnit.MINUTES.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                                TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                         TimeUnit.MILLISECONDS.toSeconds(millis) -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
                 )
         );
 
+
         if(task.isRunning())
-            holder.mStartStop.setBackgroundResource(R.drawable.ic_play_circle_outline_black_48dp);
-        else
             holder.mStartStop.setBackgroundResource(R.drawable.ic_pause_circle_outline_black_48dp);
+        else
+            holder.mStartStop.setBackgroundResource(R.drawable.ic_play_circle_outline_black_48dp);
 
         holder.mTaskDescription.setText(task.getExpandedTask().getDescription());
+
+        holder.mDeleteTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDataset.remove(pos);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
