@@ -122,11 +122,10 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         return true;
     }
 
-    public boolean updateTable(List<Task> dataset) {
+    public void updateTable(List<Task> dataset) {
         for(Task t : dataset){
             updateTask(t);
         }
-        return true;
     }
 
     public Integer deleteTask(Integer id){

@@ -47,12 +47,10 @@ public class TaskHandler {
 
     public void deleteTask(Task task) {
         mTaskDatabaseHelper.deleteTask(task.getId());
-        refresh();
     }
 
     public void updateTask(Task task) {
         mTaskDatabaseHelper.updateTask(task);
-        refresh();
     }
 
     public void refresh() {
@@ -67,6 +65,10 @@ public class TaskHandler {
             if(t.isRunning()){
                 t.setTimeLeft(t.getTimeLeft() - 1000);
                 mTaskAdapter.notifyDataSetChanged();
+                if(t.getTimeLeft() < 0){
+                    t.pause();
+                    t.resetTimeLeft();
+                }
             }
         }
     }
@@ -83,8 +85,12 @@ public class TaskHandler {
         for(Task t : mDataset){
             if(t.isRunning()){
                 t.setTimeLeft(t.getTimeLeft() - timeElapsed);
-                mTaskAdapter.notifyDataSetChanged();
             }
+            if(t.getTimeLeft() < 0){
+                t.resetTimeLeft();
+                t.pause();
+            }
+            mTaskAdapter.notifyDataSetChanged();
         }
 
         updateDatabase();
