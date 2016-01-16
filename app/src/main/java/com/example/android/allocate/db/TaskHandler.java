@@ -11,6 +11,12 @@ import java.util.List;
 /**
  * Created by Dooj on 2016-01-13.
  */
+
+//TODO WRITE TO DATABASE ON PAUSE
+//TODO READ FROM DATABASE ON RESUME BUT UPDATE THOSE THAT HAVE BEEN RUNNING
+//TODO ALL ELSE JUST HAVE UI UPDATES WHILE ON MAIN ACTIVITY
+//TODO HAVE ONE DATASET FOR WHOLE APP NOT 3 INSTANCES
+
 public class TaskHandler {
     private TaskDatabaseHelper mTaskDatabaseHelper;
     private TaskAdapter mTaskAdapter;
