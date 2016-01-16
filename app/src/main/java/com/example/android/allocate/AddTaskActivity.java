@@ -45,8 +45,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.task_bar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("Add Task");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Add Task");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         editTextHmsInput = (EditText) findViewById(R.id.hms_field);
 

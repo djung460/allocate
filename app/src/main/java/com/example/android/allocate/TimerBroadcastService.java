@@ -25,6 +25,7 @@ public class TimerBroadcastService extends Service {
 
         Log.i(SERVICE_NAME, "Timer Started");
 
+        //TODO FIX THIS IT'S A HACK JOB
         updatePeriod = new CountDownTimer(Long.MAX_VALUE,1000) {
             @Override
             public void onTick(long millisUntilFinished) {

@@ -26,15 +26,8 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivity extends AppCompatActivity {
-    //Tasks
-    private List<Task> mTasks;
-
-    //Database
-    private TaskDatabaseHelper mDbHelper;
-
     //Member variables for recycler view displays info
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mTaskAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     //Extra Inputs
@@ -86,14 +79,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         registerReceiver(mBroadcastReceiver, new IntentFilter(TimerBroadcastService.COUNTDOWN_BROADCAST));
-        mTaskHandler.refresh();
+        mTaskHandler.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(mBroadcastReceiver);
-
+        mTaskHandler.pause();
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.android.allocate.task.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dooj on 2015-12-25.
@@ -118,6 +119,13 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
                 contentValues,
                 TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " = ? ",
                 new String[] { Integer.toString(task.getId()) } );
+        return true;
+    }
+
+    public boolean updateTable(List<Task> dataset) {
+        for(Task t : dataset){
+            updateTask(t);
+        }
         return true;
     }
 

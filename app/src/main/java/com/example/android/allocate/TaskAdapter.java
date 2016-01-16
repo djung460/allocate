@@ -1,13 +1,10 @@
 package com.example.android.allocate;
 
-
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.android.allocate.ViewHolders.TaskViewHolder;
-import com.example.android.allocate.db.TaskDatabaseHelper;
 import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
 
@@ -70,6 +67,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             @Override
             public void onClick(View v) {
                 mDataset.get(position).resetTimeLeft();
+                mDataset.get(position).pause();
                 mTaskHandler.updateTask(task);
                 notifyDataSetChanged();
 

@@ -15,6 +15,7 @@ public class TaskHandler {
     private TaskDatabaseHelper mTaskDatabaseHelper;
     private TaskAdapter mTaskAdapter;
     private List<Task> mDataset;
+    private static long mTimePaused;
 
     public TaskHandler(Context context) {
         mTaskDatabaseHelper = new TaskDatabaseHelper(context);
@@ -68,6 +69,29 @@ public class TaskHandler {
                 mTaskAdapter.notifyDataSetChanged();
             }
         }
+    }
 
+    public void pause() {
+        mTimePaused = System.currentTimeMillis();
+        updateDatabase();
+        refresh();
+    }
+
+    public void resume() {
+        long timeElapsed = System.currentTimeMillis() - mTimePaused;
+
+        for(Task t : mDataset){
+            if(t.isRunning()){
+                t.setTimeLeft(t.getTimeLeft() - timeElapsed);
+                mTaskAdapter.notifyDataSetChanged();
+            }
+        }
+
+        updateDatabase();
+        refresh();
+    }
+
+    public void updateDatabase() {
+        mTaskDatabaseHelper.updateTable(mDataset);
     }
 }
