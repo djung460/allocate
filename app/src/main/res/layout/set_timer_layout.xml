@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="48dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:gravity="center">
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,75 +15,83 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="64sp"
                 android:id="@+id/text_view_hrs"
-                android:text = "00"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:text="00"
+                android:textSize="45sp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:text = "h"/>
+                android:fontFamily="sans-serif-thin"
+                android:text="h"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="64sp"
                 android:id="@+id/text_view_mins"
-                android:text = "00"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:text="00"
+                android:textSize="45sp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:text = "m"/>
+                android:fontFamily="sans-serif-thin"
+                android:text="m"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="64sp"
                 android:id="@+id/text_view_secs"
-                android:text = "00"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:text="00"
+                android:textSize="45sp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:text = "s"/>
+                android:fontFamily="sans-serif-thin"
+                android:text="s"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <ImageButton
-            android:contentDescription="backspace"
             android:id="@+id/image_button_backspace"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:src = "@drawable/ic_backspace_black_36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
             android:background="@android:color/transparent"
-            android:tint="@android:color/darker_gray"/>
+            android:contentDescription="backspace"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_backspace_black_36dp"
+            android:tint="@android:color/darker_gray"
+            android:onClick="enterNum"/>
 
     </LinearLayout>
 
     <include
-        android:id = "@+id/numpad"
-        layout = "@layout/num_pad"
-        >
+        android:id="@+id/numpad"
+        layout="@layout/num_pad">
     </include>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_done_numpad_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_done_white_48pt_3x"/>
 
 </LinearLayout>
