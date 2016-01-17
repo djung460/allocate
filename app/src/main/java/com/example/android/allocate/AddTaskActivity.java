@@ -122,12 +122,12 @@ public class AddTaskActivity extends AppCompatActivity {
                     hms_time.append('9');
                     setTimeText();
                     break;
-                case R.id.image_button_backspace:
-                    hms_time.deleteCharAt(hms_time.length() - 1);
-                    cursor -= 2;
-                    setTimeText();
-                    break;
             }
+        }
+        if(v.getId() == R.id.image_button_backspace && hms_time.length() > 6){
+                hms_time.deleteCharAt(hms_time.length() - 1);
+                cursor -= 2;
+                setTimeText();
         }
     }
 

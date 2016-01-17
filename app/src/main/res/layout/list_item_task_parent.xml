@@ -20,7 +20,6 @@
             android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
             android:text="00:00:00"
-            android:textColor="@android:color/black"
             android:textSize="64sp"
             android:fontFamily="sans-serif-thin"/>
 
@@ -28,12 +27,14 @@
             android:id="@+id/button_start_stop"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_centerVertical = "true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
-            android:layout_alignParentBottom="true" />
+            android:tint = "@android:color/darker_gray"
+            android:src="@drawable/ic_play_circle_outline_black_48dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 
@@ -47,7 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical = "true"
             android:text="Task Title"
-            android:textColor="@android:color/black"
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="bold"
             android:textSize="20sp" />
     </RelativeLayout>
 

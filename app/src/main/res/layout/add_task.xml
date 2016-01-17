@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    style="@style/AppTheme">
+    style="@style/AppTheme"
+    android:weightSum="1">
 
     <include
         android:id="@+id/task_bar"
@@ -21,7 +22,8 @@
             android:layout_height="wrap_content"
             android:focusable="true"
             android:hint="@string/task_title"
-            android:textSize="45sp" />
+            android:textSize="36sp"
+            android:fontFamily="sans-serif-thin"/>
     </android.support.design.widget.TextInputLayout>
 
 
@@ -30,12 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:hint="@string/task_description" />
+        android:hint="@string/task_description"
+        android:fontFamily="sans-serif-thin"/>
 
     <include
         android:id="@+id/enter_time"
         layout = "@layout/set_timer_layout"
-        android:layout_height="match_parent"
-        android:layout_width="fill_parent" />
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
 </LinearLayout>
