@@ -48,9 +48,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
 
 
         if(task.isRunning())
-            holder.mStartStop.setBackgroundResource(R.drawable.ic_pause_circle_outline_black_48dp);
+            holder.mStartStop.setImageResource(R.drawable.ic_pause_circle_outline_black_48dp);
         else
-            holder.mStartStop.setBackgroundResource(R.drawable.ic_play_circle_outline_black_48dp);
+            holder.mStartStop.setImageResource(R.drawable.ic_play_circle_outline_black_48dp);
 
         holder.mTaskDescription.setText(task.getExpandedTask().getDescription());
 
