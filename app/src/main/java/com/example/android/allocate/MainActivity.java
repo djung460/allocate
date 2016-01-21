@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,6 +68,23 @@ public class MainActivity extends AppCompatActivity {
         //Start timer
         startService(new Intent(this, TimerBroadcastService.class));
         Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                mTaskHandler.getTaskAdapter().deleteItem(viewHolder.getAdapterPosition());
+                Toast.makeText(MainActivity.this, "Task Deleted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {

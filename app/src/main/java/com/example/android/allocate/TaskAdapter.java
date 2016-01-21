@@ -1,5 +1,6 @@
 package com.example.android.allocate;
 
+import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,15 +55,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
 
         holder.mTaskDescription.setText(task.getExpandedTask().getDescription());
 
-        holder.mDeleteTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDataset.remove(pos);
-                mTaskHandler.deleteTask(task);
-                notifyDataSetChanged();
-            }
-        });
-
         holder.mResetTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +77,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
                 notifyDataSetChanged();
             }
         });
+
+    }
+
+    public void deleteItem(int pos){
+        mTaskHandler.deleteTask(mDataset.get(pos));
+        mDataset.remove(pos);
+        notifyDataSetChanged();
     }
 
     @Override
