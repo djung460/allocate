@@ -69,11 +69,16 @@ public class TaskHandler {
     public void tick() {
         for(Task t : mDataset){
             if(t.isRunning()){
-                t.setTimeLeft(t.getTimeLeft() - 1000);
-                mTaskAdapter.notifyDataSetChanged();
-                if(t.getTimeLeft() < 0){
-                    t.pause();
-                    t.resetTimeLeft();
+                t.setNumTicks(t.numTicks() + 1);
+                if(t.numTicks() >= 9) {
+                    t.setTimeLeft(t.getTimeLeft() - 1000);
+                    t.setNumTicks(0);
+                    mTaskAdapter.notifyDataSetChanged();
+
+                    if (t.getTimeLeft() < 0) {
+                        t.pause();
+                        t.resetTimeLeft();
+                    }
                 }
             }
         }

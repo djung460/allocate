@@ -20,6 +20,7 @@ public class Task {
     private long mInitialTime;
     private long mTimeLeft;
     private ExpandedTask mExpandedTask;
+    private int numTicks;
     //TODO IMPLEMENT A TIMER
 
     public Task(int id, String title, String description, boolean status, long timeLeft, long initialTime ) {
@@ -71,4 +72,11 @@ public class Task {
         mRunning = true;
     }
 
+    public int numTicks() {
+        return numTicks;
+    }
+
+    public void setNumTicks(int n) {
+        numTicks = n;
+    }
 }
