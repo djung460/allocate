@@ -65,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Start timer
-        startService(new Intent(this, TimerBroadcastService.class));
-        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
-
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
@@ -97,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //Start timer
+        startService(new Intent(this, TimerBroadcastService.class));
+        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
         registerReceiver(mBroadcastReceiver, new IntentFilter(TimerBroadcastService.COUNTDOWN_BROADCAST));
         mTaskHandler.resume();
     }
@@ -104,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        //Start timer
+        stopService(new Intent(this, TimerBroadcastService.class));
+        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
         unregisterReceiver(mBroadcastReceiver);
         mTaskHandler.pause();
     }
@@ -149,6 +151,10 @@ public class MainActivity extends AppCompatActivity {
     public void startAddTaskActivity() {
         Intent intent  = new Intent(this, AddTaskActivity.class);
         startActivity(intent);
+    }
+
+    public Context getContext(){
+        return this.getContext();
     }
 }
 

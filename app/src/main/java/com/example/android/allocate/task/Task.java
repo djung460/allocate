@@ -6,23 +6,18 @@ package com.example.android.allocate.task;
 public class Task {
     private boolean mRunning;
     private String mTitle;
-    private int mId;
+    private long mId;
     private long mInitialTime;
     private long mTimeLeft;
     private ExpandedTask mExpandedTask;
     private int numTicks;
 
-    public Task(int id, String title, String description, boolean status, long timeLeft, long initialTime ) {
+    public Task(long id, String title, boolean status, long timeLeft, long initialTime ) {
         mTitle = title;
         mId = id;
         mInitialTime = initialTime;
         mTimeLeft = timeLeft;
-        mExpandedTask = new ExpandedTask(description);
         mRunning = status;
-    }
-
-    public ExpandedTask getExpandedTask() {
-        return mExpandedTask;
     }
 
     public boolean isRunning() {
@@ -41,7 +36,7 @@ public class Task {
         return mTimeLeft;
     }
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 

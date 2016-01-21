@@ -30,13 +30,12 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
                     TaskContract.TaskEntry._ID + " INTEGER PRIMARY KEY," +
                     TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + INT_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
-                    TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_STATUS + BOOLEAN_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT + INT_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME + INT_TYPE +
                     ")";
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "Task.db";
 
     public TaskDatabaseHelper(Context context) {
@@ -74,7 +73,6 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,task.isRunning());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,task.getTitle());
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,task.getExpandedTask().getDescription());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, task.getTimeLeft());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME, task.getInitialTime());
 
@@ -110,7 +108,6 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_STATUS,task.isRunning());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,task.getTitle());
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,task.getExpandedTask().getDescription());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, task.getTimeLeft());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME, task.getInitialTime());
 
@@ -118,7 +115,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
                 TaskContract.TaskEntry.TABLE_NAME,
                 contentValues,
                 TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " = ? ",
-                new String[] { Integer.toString(task.getId()) } );
+                new String[] { Long.toString(task.getId()) } );
         return true;
     }
 
@@ -128,12 +125,12 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    public Integer deleteTask(Integer id){
+    public Integer deleteTask(long id){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(
                 TaskContract.TaskEntry.TABLE_NAME,
                 TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " = ? ",
-                new String[] { Integer.toString(id) } );
+                new String[] { Long.toString(id) } );
     }
 
     public ArrayList<Task> getAllTasks() {
@@ -145,9 +142,8 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
 
         while(!res.isAfterLast() && numberOfEntries() != 0) {
             taskArrayList.add(new Task(
-                    res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID)),
+                    res.getLong(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID)),
                     res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TITLE)),
-                    res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION)),
                     res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_STATUS)) != 0,
                     res.getLong(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT)),
                     res.getLong(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME))

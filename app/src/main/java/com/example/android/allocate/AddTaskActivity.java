@@ -29,7 +29,6 @@ public class AddTaskActivity extends AppCompatActivity {
     //    private TaskDatabaseHelper mDbHelper;
     private TaskHandler mTaskHandler;
     private EditText editTextTitle;
-    private EditText editTextDescription;
 
     private TextView textViewHrs;
     private TextView textViewMins;
@@ -53,7 +52,6 @@ public class AddTaskActivity extends AppCompatActivity {
         //mDbHelper = new TaskDatabaseHelper(this);
 
         editTextTitle = (EditText) findViewById(R.id.task_name);
-        editTextDescription = (EditText) findViewById(R.id.task_description);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.task_bar);
         setSupportActionBar(toolbar);
@@ -146,10 +144,6 @@ public class AddTaskActivity extends AppCompatActivity {
         }
     }
 
-    public void slideNumPad(View v){
-
-    }
-
     public void setTimeText() {
         cursor++;
         textViewHrs.setText(hms_time.substring(cursor, 2 + cursor));
@@ -181,14 +175,13 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private void addTask() {
         String title = editTextTitle.getText().toString();
-        String description = editTextDescription.getText().toString();
 
         int hours = Integer.parseInt(hms_time.substring(cursor, 2 + cursor));
         int minutes = Integer.parseInt(hms_time.substring(2 + cursor, 4 + cursor));
         int seconds = Integer.parseInt(hms_time.substring(4 + cursor, 6 + cursor));
 
         long timeInitial = hours * HOURS_TO_MILLIS + minutes * MINUTES_TO_MILLIS + seconds * SECONDS_TO_MILLIS;
-        Task task = new Task(title.hashCode() + description.hashCode(), title, description, false, timeInitial, timeInitial);
+        Task task = new Task(System.currentTimeMillis(), title, false, timeInitial, timeInitial);
         mTaskHandler.addTask(task);
     }
 

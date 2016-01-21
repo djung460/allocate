@@ -53,8 +53,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         else
             holder.mStartStop.setImageResource(R.drawable.ic_play_circle_outline_black_48dp);
 
-        holder.mTaskDescription.setText(task.getExpandedTask().getDescription());
-
         holder.mResetTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
