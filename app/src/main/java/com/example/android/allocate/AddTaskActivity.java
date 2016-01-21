@@ -1,6 +1,7 @@
 package com.example.android.allocate;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,24 +13,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
-import com.example.android.allocate.db.TaskDatabaseHelper;
 import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
-
-import java.util.List;
 
 /**
  * Created by Dooj on 2016-01-03.
  */
 
-//TODO IMPLEMENT THIS CLASS WITH UPDATED INPUT ACTIVITY
 public class AddTaskActivity extends AppCompatActivity {
     //    private TaskDatabaseHelper mDbHelper;
     private TaskHandler mTaskHandler;
@@ -77,6 +72,31 @@ public class AddTaskActivity extends AppCompatActivity {
         hms_time.append("000000");
 
         cursor = 0;
+
+        backspace = (ImageButton) findViewById(R.id.image_button_backspace);
+
+        backspace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(hms_time.length() > 6) {
+                    hms_time.deleteCharAt(hms_time.length() - 1);
+                    cursor -= 2;
+                    setTimeText();
+                }
+            }
+        });
+
+        backspace.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                while(hms_time.length() > 6) {
+                    hms_time.deleteCharAt(hms_time.length() - 1);
+                    cursor -= 2;
+                    setTimeText();
+                }
+                return true;
+            }
+        });
     }
 
     public void enterNum(View v) {
@@ -124,11 +144,10 @@ public class AddTaskActivity extends AppCompatActivity {
                     break;
             }
         }
-        if(v.getId() == R.id.image_button_backspace && hms_time.length() > 6){
-                hms_time.deleteCharAt(hms_time.length() - 1);
-                cursor -= 2;
-                setTimeText();
-        }
+    }
+
+    public void slideNumPad(View v){
+
     }
 
     public void setTimeText() {

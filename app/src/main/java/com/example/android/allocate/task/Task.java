@@ -1,15 +1,5 @@
 package com.example.android.allocate.task;
 
-import android.os.CountDownTimer;
-
-import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
-import com.example.android.allocate.Day;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 /**
  * Created by Dooj on 2015-12-25.
  */
@@ -21,7 +11,6 @@ public class Task {
     private long mTimeLeft;
     private ExpandedTask mExpandedTask;
     private int numTicks;
-    //TODO IMPLEMENT A TIMER
 
     public Task(int id, String title, String description, boolean status, long timeLeft, long initialTime ) {
         mTitle = title;

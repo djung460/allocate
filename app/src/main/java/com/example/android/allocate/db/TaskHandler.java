@@ -65,7 +65,6 @@ public class TaskHandler {
         mTaskAdapter.notifyDataSetChanged();
     }
 
-    //TODO FIX THIS METHOD CAN'T RUN TWO TIMERS AT ONCE UPDATE DATABASE ONLY ON PAUSE
     public void tick() {
         for(Task t : mDataset){
             if(t.isRunning()){

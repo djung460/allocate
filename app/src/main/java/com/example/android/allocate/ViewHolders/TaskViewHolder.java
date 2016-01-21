@@ -2,11 +2,9 @@ package com.example.android.allocate.ViewHolders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.example.android.allocate.R;
 
 /**
