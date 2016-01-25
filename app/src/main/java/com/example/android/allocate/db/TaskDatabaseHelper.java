@@ -144,7 +144,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         res.moveToFirst();
 
         while(!res.isAfterLast() && numberOfEntries() != 0) {
-            taskArrayList.add(new Task(
+            taskArrayList.add(0,new Task(
                     res.getLong(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID)),
                     res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TITLE)),
                     res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_STATUS)) != 0,
