@@ -10,7 +10,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="Allocate"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -21,13 +21,13 @@
         </activity>
 
         <activity
-            android:name=".AddTaskActivity"
+            android:name=".activities.AddTaskActivity"
             android:label="Add Task"
             android:screenOrientation="portrait">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.allocate.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
 
         <service android:name=".TimerBroadcastService" />

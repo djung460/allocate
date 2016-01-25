@@ -1,7 +1,9 @@
 package com.example.android.allocate.task;
 
 /**
- * Created by Dooj on 2015-12-25.
+ * Created by David Jung on 2015-12-25.
+ *
+ * Task object that users can assign the amount of time they wish to allocate.
  */
 public class Task {
     private boolean mRunning;
@@ -9,7 +11,6 @@ public class Task {
     private long mId;
     private long mInitialTime;
     private long mTimeLeft;
-    private ExpandedTask mExpandedTask;
     private int numTicks;
 
     public Task(long id, String title, boolean status, long timeLeft, long initialTime ) {

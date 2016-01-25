@@ -8,7 +8,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**
- * Created by Dooj on 2016-01-13
+ * Created by David Jung on 2016-01-13
+ *
+ * Temporary service that runs in the background when activity is on screen to update the
+ * UI during ticking
  */
 public class TimerBroadcastService extends Service {
 
@@ -28,7 +31,7 @@ public class TimerBroadcastService extends Service {
         updatePeriod = new CountDownTimer(Long.MAX_VALUE,100) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.i(SERVICE_NAME, "Time Remaining " + millisUntilFinished);
+                //Log.i(SERVICE_NAME, "Time Remaining " + millisUntilFinished);
                 broadcastIntent.putExtra("0.2 Second Passed",true);
                 sendBroadcast(broadcastIntent);
             }

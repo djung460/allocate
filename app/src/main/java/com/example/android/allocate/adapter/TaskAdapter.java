@@ -1,11 +1,12 @@
-package com.example.android.allocate;
+package com.example.android.allocate.adapter;
 
-import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.android.allocate.ViewHolders.TaskViewHolder;
+
+import com.example.android.allocate.R;
+import com.example.android.allocate.adapter.TaskViewHolder;
 import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
 

@@ -1,17 +1,16 @@
 package com.example.android.allocate.db;
 
-import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.text.method.MultiTapKeyListener;
 
-import com.example.android.allocate.TaskAdapter;
+import com.example.android.allocate.adapter.TaskAdapter;
 import com.example.android.allocate.task.Task;
 
 import java.util.List;
 
 /**
- * Created by Dooj on 2016-01-13.
+ * Created by David Jung on 2016-01-13.
+ *
+ * Handles the task and acts as an interface between the UI and Database
  */
 
 public class TaskHandler {
@@ -19,41 +18,13 @@ public class TaskHandler {
     private TaskAdapter mTaskAdapter;
     private List<Task> mDataset;
     private static long mTimePaused;
+    private Context mContext;
 
     public TaskHandler(Context context) {
         mTaskDatabaseHelper = new TaskDatabaseHelper(context);
         mDataset = mTaskDatabaseHelper.getAllTasks();
         mTaskAdapter = new TaskAdapter(mDataset, this);
-    }
-
-    public TaskDatabaseHelper getTaskDatabaseHelper() {
-        return mTaskDatabaseHelper;
-    }
-
-    public TaskAdapter getTaskAdapter() {
-        return mTaskAdapter;
-    }
-
-    public List<Task> getDataset() {
-        return mDataset;
-    }
-
-    public void clearTask() {
-        mTaskDatabaseHelper.clearTasks();
-        refresh();
-    }
-
-    public void addTask(Task task) {
-        mTaskDatabaseHelper.insertTask(task);
-        refresh();
-    }
-
-    public void deleteTask(Task task) {
-        mTaskDatabaseHelper.deleteTask(task.getId());
-    }
-
-    public void updateTask(Task task) {
-        mTaskDatabaseHelper.updateTask(task);
+        mContext = context;
     }
 
     public void refresh() {
@@ -107,4 +78,35 @@ public class TaskHandler {
     public void updateDatabase() {
         mTaskDatabaseHelper.updateTable(mDataset);
     }
+
+    public TaskDatabaseHelper getTaskDatabaseHelper() {
+        return mTaskDatabaseHelper;
+    }
+
+    public TaskAdapter getTaskAdapter() {
+        return mTaskAdapter;
+    }
+
+    public List<Task> getDataset() {
+        return mDataset;
+    }
+
+    public void clearTask() {
+        mTaskDatabaseHelper.clearTasks();
+        refresh();
+    }
+
+    public void addTask(Task task) {
+        mTaskDatabaseHelper.insertTask(task);
+        refresh();
+    }
+
+    public void deleteTask(Task task) {
+        mTaskDatabaseHelper.deleteTask(task.getId());
+    }
+
+    public void updateTask(Task task) {
+        mTaskDatabaseHelper.updateTask(task);
+    }
 }
+

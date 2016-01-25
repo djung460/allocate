@@ -1,4 +1,4 @@
-package com.example.android.allocate.ViewHolders;
+package com.example.android.allocate.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

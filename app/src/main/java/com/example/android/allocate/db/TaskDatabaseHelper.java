@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Dooj on 2015-12-25.
+ * Created by David Jung on 2015-12-25.
+ *
+ * Acts as an interface with the SQLite database. The task information is written each time
+ * the main activity is paused and read each time the app resumes.
  */
 public class TaskDatabaseHelper extends SQLiteOpenHelper{
     private static final String INT_TYPE = " INTEGER";

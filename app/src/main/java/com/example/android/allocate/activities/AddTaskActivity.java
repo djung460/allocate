@@ -1,4 +1,4 @@
-package com.example.android.allocate;
+package com.example.android.allocate.activities;
 
 import android.content.Intent;
 import android.media.Image;
@@ -18,11 +18,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.android.allocate.R;
 import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
 
 /**
- * Created by Dooj on 2016-01-03.
+ * Created by David Jung on 2016-01-03.
+ *
+ * The activity where users can input relevants fields to create a new task.
  */
 
 public class AddTaskActivity extends AppCompatActivity {

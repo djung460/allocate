@@ -1,12 +1,14 @@
-package com.example.android.allocate;
+package com.example.android.allocate.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
-import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.android.allocate.db.TaskDatabaseHelper;
+import com.example.android.allocate.R;
+import com.example.android.allocate.TimerBroadcastService;
 import com.example.android.allocate.db.TaskHandler;
-import com.example.android.allocate.task.Task;
-
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -105,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         //Start timer
         stopService(new Intent(this, TimerBroadcastService.class));
-        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
+        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Stopped service");
+
         unregisterReceiver(mBroadcastReceiver);
         mTaskHandler.pause();
     }
@@ -151,10 +152,6 @@ public class MainActivity extends AppCompatActivity {
     public void startAddTaskActivity() {
         Intent intent  = new Intent(this, AddTaskActivity.class);
         startActivity(intent);
-    }
-
-    public Context getContext(){
-        return this.getContext();
     }
 }
 
