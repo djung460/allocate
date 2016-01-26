@@ -37,8 +37,8 @@ public class TaskHandler {
         for(Task t : mDataset){
             if(t.isRunning()){
                 t.setNumTicks(t.numTicks() + 1);
+                t.setTimeLeft(t.getTimeLeft() - 100);
                 if(t.numTicks() >= 10) {
-                    t.setTimeLeft(t.getTimeLeft() - 1000);
                     t.setNumTicks(0);
                     mTaskAdapter.notifyDataSetChanged();
 

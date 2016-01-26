@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 mTaskHandler.getTaskAdapter().onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
+
+            
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);

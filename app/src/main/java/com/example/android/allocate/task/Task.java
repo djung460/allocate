@@ -43,6 +43,7 @@ public class Task {
 
     public void resetTimeLeft() {
         mTimeLeft = mInitialTime;
+        numTicks = 0;
     }
 
     public void setTimeLeft(long time) {
