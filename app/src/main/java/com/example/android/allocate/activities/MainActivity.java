@@ -21,8 +21,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.android.allocate.R;
+import com.example.android.allocate.TickReciever;
 import com.example.android.allocate.TimerBroadcastService;
+import com.example.android.allocate.alarms.TimerDoneReceiver;
 import com.example.android.allocate.db.TaskHandler;
+import com.example.android.allocate.task.Task;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private TaskHandler mTaskHandler;
+    private TickReciever  mBroadcastReceiver;
+
+    private TimerDoneReceiver timerDoneReceiver = new TimerDoneReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
+                mTaskHandler.getTaskAdapter().onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
             }
         };
 
@@ -83,18 +90,17 @@ public class MainActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            mTaskHandler.tick();
-        }
-    };
-
     @Override
     protected void onResume() {
         super.onResume();
         //Start timer
         startService(new Intent(this, TimerBroadcastService.class));
+
+        mBroadcastReceiver = new TickReciever();
+        mBroadcastReceiver.initialize(mTaskHandler);
+
+        timerDoneReceiver.cancelAlarms(this);
+
         Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
         registerReceiver(mBroadcastReceiver, new IntentFilter(TimerBroadcastService.COUNTDOWN_BROADCAST));
         mTaskHandler.resume();
@@ -107,25 +113,24 @@ public class MainActivity extends AppCompatActivity {
         stopService(new Intent(this, TimerBroadcastService.class));
         Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Stopped service");
 
-        unregisterReceiver(mBroadcastReceiver);
+        for(Task t : mTaskHandler.getDataset()){
+            if(t.isRunning()){
+                timerDoneReceiver.setAlarms(this,t.getTimeLeft(),t.getId());
+            }
+        }
+
         mTaskHandler.pause();
     }
 
     @Override
-    public void onDestroy() {
-        stopService(new Intent(this, TimerBroadcastService.class));
-        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Stopped service");
-        super.onDestroy();
+    public void onStop() {
+        unregisterReceiver(mBroadcastReceiver);
+        super.onStop();
     }
 
     @Override
-    public void onStop() {
-        try {
-            unregisterReceiver(mBroadcastReceiver);
-        } catch (Exception e) {
-            // Receiver was probably already stopped in onPause()
-        }
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

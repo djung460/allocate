@@ -10,6 +10,7 @@ import com.example.android.allocate.adapter.TaskViewHolder;
 import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -17,14 +18,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     private List<Task> mDataset;
     private TaskHandler mTaskHandler;
 
-    public TaskAdapter(List<Task> dataset, TaskHandler taskHandler){
+    public TaskAdapter(List<Task> dataset, TaskHandler taskHandler) {
         mDataset = dataset;
         mTaskHandler = taskHandler;
     }
 
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_task_parent,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_task_parent, parent, false);
 
         TaskViewHolder vh = new TaskViewHolder(v);
         return vh;
@@ -49,7 +50,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         );
 
 
-        if(task.isRunning())
+        if (task.isRunning())
             holder.mStartStop.setImageResource(R.drawable.ic_pause_circle_outline_black_48dp);
         else
             holder.mStartStop.setImageResource(R.drawable.ic_play_circle_outline_black_48dp);
@@ -68,7 +69,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         holder.mStartStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mDataset.get(position).isRunning()){
+                if (mDataset.get(position).isRunning()) {
                     mDataset.get(position).pause();
                 } else {
                     mDataset.get(position).start();
@@ -79,7 +80,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
 
     }
 
-    public void deleteItem(int pos){
+    public void onItemMove(int fromPos, int toPos) {
+        if (fromPos < toPos) {
+            for (int i = fromPos; i < toPos; i++) {
+                Collections.swap(mDataset, i, i + 1);
+            }
+        } else {
+            for(int i = fromPos; i > toPos; i--) {
+                Collections.swap(mDataset,i,i-1);
+            }
+        }
+
+        notifyItemMoved(fromPos,toPos);
+    }
+
+    public void deleteItem(int pos) {
         mTaskHandler.deleteTask(mDataset.get(pos));
         mDataset.remove(pos);
         notifyDataSetChanged();
