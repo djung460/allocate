@@ -32,7 +32,7 @@
             android:layout_height="36dp"
             android:padding = "8dp"
             android:layout_gravity="center_vertical"
-            android:backgroundTint="@android:color/darker_gray"
+            android:backgroundTint= "#7986CB"
             android:src="@drawable/ic_play_arrow_white_48dp"
             android:scaleType="fitCenter"
             android:layout_marginRight="8dp"

@@ -11,9 +11,9 @@
 
         <Button
             android:id="@+id/numpad_1"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-thin"
             android:onClick="enterNum"
@@ -22,9 +22,9 @@
 
         <Button
             android:id="@+id/numpad_2"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-thin"
             android:onClick="enterNum"
@@ -33,9 +33,9 @@
 
         <Button
             android:id="@+id/numpad_3"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-thin"
             android:onClick="enterNum"
@@ -49,9 +49,9 @@
 
         <Button
             android:id="@+id/numpad_4"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-thin"
             android:onClick="enterNum"
@@ -60,9 +60,9 @@
 
         <Button
             android:id="@+id/numpad_5"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-thin"
             android:onClick="enterNum"
@@ -71,9 +71,9 @@
 
         <Button
             android:id="@+id/numpad_6"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-thin"
             android:onClick="enterNum"
@@ -87,9 +87,9 @@
 
         <Button
             android:id="@+id/numpad_7"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-thin"
             android:onClick="enterNum"
@@ -98,9 +98,9 @@
 
         <Button
             android:id="@+id/numpad_8"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-thin"
             android:onClick="enterNum"
@@ -109,7 +109,7 @@
 
         <Button
             android:id="@+id/numpad_9"
-            android:layout_width="96dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="8dp"
             android:background="@android:color/transparent"
@@ -121,7 +121,7 @@
 
     <Button
         android:id="@+id/numpad_0"
-        android:layout_width="96dp"
+        android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="8dp"
         android:background="@android:color/transparent"

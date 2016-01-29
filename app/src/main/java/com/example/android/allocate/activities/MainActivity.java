@@ -148,8 +148,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                break;
             case R.id.action_clear:
                 mTaskHandler.clearTask();
                 Toast.makeText(MainActivity.this, "Task Cleared", Toast.LENGTH_SHORT).show();

@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:layout_marginStart = "32dp"
+        android:layout_marginLeft="32dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -75,15 +76,17 @@
 
         <ImageButton
             android:id="@+id/image_button_backspace"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
             android:background="@android:color/transparent"
             android:contentDescription="backspace"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_backspace_black_36dp"
-            android:tint="@android:color/darker_gray"
+            android:src="@drawable/ic_backspace_white_48pt"
+            android:scaleType="fitCenter"
+            android:tint="#7986CB"
             android:onClick="enterNum"/>
 
     </LinearLayout>
