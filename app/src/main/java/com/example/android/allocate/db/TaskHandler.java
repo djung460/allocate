@@ -23,7 +23,7 @@ public class TaskHandler {
     public TaskHandler(Context context) {
         mTaskDatabaseHelper = new TaskDatabaseHelper(context);
         mDataset = mTaskDatabaseHelper.getAllTasks();
-        mTaskAdapter = new TaskAdapter(mDataset, this);
+        mTaskAdapter = new TaskAdapter(mDataset, this,context);
         mContext = context;
     }
 
@@ -34,17 +34,17 @@ public class TaskHandler {
     }
 
     public void tick() {
-        for(Task t : mDataset){
+        for(int i = 0; i < mDataset.size();i++){
+            Task t = mDataset.get(i);
             if(t.isRunning()){
                 t.setNumTicks(t.numTicks() + 1);
                 t.setTimeLeft(t.getTimeLeft() - 100);
                 if(t.numTicks() >= 10) {
                     t.setNumTicks(0);
-                    mTaskAdapter.notifyDataSetChanged();
+                    mTaskAdapter.notifyItemChanged(i);
 
-                    if (t.getTimeLeft() < 0) {
+                    if (t.getTimeLeft() <= 0) {
                         t.pause();
-                        t.resetTimeLeft();
                     }
                 }
             }
@@ -64,8 +64,7 @@ public class TaskHandler {
             if(t.isRunning()){
                 t.setTimeLeft(t.getTimeLeft() - timeElapsed);
             }
-            if(t.getTimeLeft() < 0){
-                t.resetTimeLeft();
+            if(t.getTimeLeft() <= 0){
                 t.pause();
             }
             mTaskAdapter.notifyDataSetChanged();

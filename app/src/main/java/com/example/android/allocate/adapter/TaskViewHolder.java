@@ -8,13 +8,15 @@ import android.widget.TextView;
 import com.example.android.allocate.R;
 
 /**
- * Created by Dooj on 2016-01-05.
+ * Created by David Jung on 2016-01-05.
+ *
+ * View holder for each list item
  */
 public class TaskViewHolder extends RecyclerView.ViewHolder {
     public TextView mTaskTitle;
     public TextView mTaskTimeRemaining;
     public ImageButton mStartStop;
-    public ImageButton   mResetTaskButton;
+//    public ImageButton   mResetTaskButton;
 
 
     /**
@@ -27,8 +29,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
         mTaskTitle = (TextView) itemView.findViewById(R.id.parent_list_item_task_title);
         mTaskTimeRemaining = (TextView) itemView.findViewById(R.id.parent_list_item_task_time);
         mStartStop = (ImageButton) itemView.findViewById(R.id.button_start_stop);
-        //Child views
-        mResetTaskButton = (ImageButton) itemView.findViewById(R.id.child_list_item_reset);
+//        mResetTaskButton = (ImageButton) itemView.findViewById(R.id.child_list_item_reset);
 
     }
 }
