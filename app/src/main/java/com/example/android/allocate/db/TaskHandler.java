@@ -44,6 +44,7 @@ public class TaskHandler {
                     mTaskAdapter.notifyItemChanged(i);
 
                     if (t.getTimeLeft() <= 0) {
+                        t.setTimeLeft(0);
                         t.pause();
                     }
                 }
@@ -65,6 +66,7 @@ public class TaskHandler {
                 t.setTimeLeft(t.getTimeLeft() - timeElapsed);
             }
             if(t.getTimeLeft() <= 0){
+                t.setTimeLeft(0);
                 t.pause();
             }
             mTaskAdapter.notifyDataSetChanged();

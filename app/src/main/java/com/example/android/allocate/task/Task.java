@@ -11,14 +11,15 @@ public class Task {
     private long mId;
     private long mInitialTime;
     private long mTimeLeft;
-    private int numTicks;
+    private int mNumTicks;
 
-    public Task(long id, String title, boolean status, long timeLeft, long initialTime ) {
+    public Task(long id, String title, boolean status, long timeLeft, long initialTime, int numTicks) {
         mTitle = title;
         mId = id;
         mInitialTime = initialTime;
         mTimeLeft = timeLeft;
         mRunning = status;
+        mNumTicks = numTicks;
     }
 
     public boolean isRunning() {
@@ -43,7 +44,7 @@ public class Task {
 
     public void resetTimeLeft() {
         mTimeLeft = mInitialTime;
-        numTicks = 0;
+        mNumTicks = 0;
     }
 
     public void setTimeLeft(long time) {
@@ -59,10 +60,10 @@ public class Task {
     }
 
     public int numTicks() {
-        return numTicks;
+        return mNumTicks;
     }
 
     public void setNumTicks(int n) {
-        numTicks = n;
+        mNumTicks = n;
     }
 }

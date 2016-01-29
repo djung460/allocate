@@ -35,10 +35,11 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
                     TaskContract.TaskEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_STATUS + BOOLEAN_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT + INT_TYPE + COMMA_SEP +
-                    TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME + INT_TYPE +
+                    TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME + INT_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_TICKS + INT_TYPE +
                     ")";
 
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "Task.db";
 
     public TaskDatabaseHelper(Context context) {
@@ -78,6 +79,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,task.getTitle());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, task.getTimeLeft());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME, task.getInitialTime());
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TICKS, task.numTicks());
 
         long newRowId;
         newRowId = db.insert(
@@ -113,6 +115,7 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TITLE,task.getTitle());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT, task.getTimeLeft());
         contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME, task.getInitialTime());
+        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME_TICKS, task.numTicks());
 
         db.update(
                 TaskContract.TaskEntry.TABLE_NAME,
@@ -149,7 +152,8 @@ public class TaskDatabaseHelper extends SQLiteOpenHelper{
                     res.getString(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TITLE)),
                     res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_STATUS)) != 0,
                     res.getLong(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TIMELEFT)),
-                    res.getLong(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME))
+                    res.getLong(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_INITIALTIME)),
+                    res.getInt(res.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME_TICKS))
                     )
             );
 
