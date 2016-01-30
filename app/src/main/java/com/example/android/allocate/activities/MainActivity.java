@@ -2,6 +2,7 @@ package com.example.android.allocate.activities;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,16 @@ public class MainActivity extends AppCompatActivity {
     private TickReciever mBroadcastReceiver;
 
     private TimerDoneReceiver timerDoneReceiver = new TimerDoneReceiver();
+
+    final Handler handler = new Handler();
+    final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            mTaskHandler.tick();
+
+            handler.postDelayed(this, 100);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,29 +105,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        handler.postDelayed(runnable, 100);
+
         //Start timer
-        startService(new Intent(this, TimerBroadcastService.class));
+//        startService(new Intent(this, TimerBroadcastService.class));
 
-        mBroadcastReceiver = new TickReciever();
-        mBroadcastReceiver.initialize(mTaskHandler);
+//        mBroadcastReceiver = new TickReciever();
+//        mBroadcastReceiver.initialize(mTaskHandler);
 
-        for (Task t : mTaskHandler.getDataset()) {
-            if (t.isRunning()) {
-                timerDoneReceiver.cancelAlarms(this);
-            }
-        }
+        timerDoneReceiver.cancelAlarms();
 
-        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
-        registerReceiver(mBroadcastReceiver, new IntentFilter(TimerBroadcastService.COUNTDOWN_BROADCAST));
+//        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
+//        registerReceiver(mBroadcastReceiver, new IntentFilter(TimerBroadcastService.COUNTDOWN_BROADCAST));
         mTaskHandler.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        handler.removeCallbacks(runnable);
         //Start timer
-        stopService(new Intent(this, TimerBroadcastService.class));
-        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Stopped service");
+//        stopService(new Intent(this, TimerBroadcastService.class));
+//        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Stopped service");
 
         for (Task t : mTaskHandler.getDataset()) {
             if (t.isRunning()) {
@@ -129,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        unregisterReceiver(mBroadcastReceiver);
         super.onStop();
     }
 

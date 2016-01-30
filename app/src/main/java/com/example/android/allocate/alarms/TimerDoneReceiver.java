@@ -49,9 +49,10 @@ public class TimerDoneReceiver extends WakefulBroadcastReceiver {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,(int) id,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeLeft, pendingIntent);
+        pendingIntentsList.add(pendingIntent);
     }
 
-    public void cancelAlarms(Context context) {
+    public void cancelAlarms() {
         if(alarmManager != null){
             for(int i = 0; i < pendingIntentsList.size(); i++){
                 alarmManager.cancel(pendingIntentsList.get(i));

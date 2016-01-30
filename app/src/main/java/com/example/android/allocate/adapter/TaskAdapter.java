@@ -79,6 +79,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         holder.mStartStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (mDataset.get(position).isRunning()) {
                     mDataset.get(position).pause();
                 } else {
