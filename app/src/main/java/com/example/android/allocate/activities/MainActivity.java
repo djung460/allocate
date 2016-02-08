@@ -1,7 +1,6 @@
 package com.example.android.allocate.activities;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.android.allocate.R;
 import com.example.android.allocate.TickReciever;
-import com.example.android.allocate.TimerBroadcastService;
 import com.example.android.allocate.alarms.TimerDoneReceiver;
 import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
