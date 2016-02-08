@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.allocate">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK">
-    </uses-permission>
+    <permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -15,7 +18,9 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="Allocate"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:taskAffinity=""
+            android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

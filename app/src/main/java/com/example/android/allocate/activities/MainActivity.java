@@ -80,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                if (mTaskHandler.getDataset().get(viewHolder.getAdapterPosition()).isRunning())
-                    return;
-                else {
+                if (!mTaskHandler.getDataset().get(viewHolder.getAdapterPosition()).isRunning()){
                     mTaskHandler.getTaskAdapter().deleteItem(viewHolder.getAdapterPosition());
                     Toast.makeText(MainActivity.this, "Task Deleted", Toast.LENGTH_SHORT).show();
                 }
@@ -90,11 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                mTaskHandler.getTaskAdapter().onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
-
-
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
@@ -107,17 +102,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         handler.postDelayed(runnable, 100);
-
-        //Start timer
-//        startService(new Intent(this, TimerBroadcastService.class));
-
-//        mBroadcastReceiver = new TickReciever();
-//        mBroadcastReceiver.initialize(mTaskHandler);
-
         timerDoneReceiver.cancelAlarms();
-
-//        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Started service");
-//        registerReceiver(mBroadcastReceiver, new IntentFilter(TimerBroadcastService.COUNTDOWN_BROADCAST));
         mTaskHandler.resume();
     }
 
@@ -126,13 +111,10 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         handler.removeCallbacks(runnable);
-        //Start timer
-//        stopService(new Intent(this, TimerBroadcastService.class));
-//        Log.i(TimerBroadcastService.COUNTDOWN_BROADCAST, "Stopped service");
 
         for (Task t : mTaskHandler.getDataset()) {
             if (t.isRunning()) {
-                timerDoneReceiver.setAlarms(this, t.getTimeLeft(), t.getId());
+                timerDoneReceiver.setAlarms(this, t.getTimeLeft(), t.getId(), t.getTitle());
             }
         }
 
