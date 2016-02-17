@@ -1,7 +1,6 @@
 package com.example.android.allocate.activities;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +28,6 @@ import com.example.android.allocate.task.Task;
  */
 
 public class AddTaskActivity extends AppCompatActivity {
-    //    private TaskDatabaseHelper mDbHelper;
     private TaskHandler mTaskHandler;
     private EditText editTextTitle;
 

@@ -1,8 +1,6 @@
 package com.example.android.allocate.adapter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.android.allocate.R;
-import com.example.android.allocate.adapter.TaskViewHolder;
 import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -89,20 +85,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             }
         });
 
-    }
-
-    public void onItemMove(int fromPos, int toPos) {
-        if (fromPos < toPos) {
-            for (int i = fromPos; i < toPos; i++) {
-                Collections.swap(mDataset, i, i + 1);
-            }
-        } else {
-            for(int i = fromPos; i > toPos; i--) {
-                Collections.swap(mDataset,i,i-1);
-            }
-        }
-
-        notifyItemMoved(fromPos, toPos);
     }
 
     public void deleteItem(int pos) {
