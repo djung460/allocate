@@ -2,11 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.allocate">
 
-    <permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <permission android:name="android.permission.WAKE_LOCK" />
 
-    <permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -14,41 +16,39 @@
         android:label="Allocate"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
         <activity
             android:name=".activities.MainActivity"
+            android:excludeFromRecents="true"
             android:label="Allocate"
             android:screenOrientation="portrait"
-            android:taskAffinity=""
-            android:excludeFromRecents="true">
+            android:taskAffinity="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.AddTaskActivity"
             android:label="Add Task"
             android:screenOrientation="portrait">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
 
         <service android:name=".TimerBroadcastService" />
-        <receiver android:name=".TickReciever"/>
 
+        <receiver android:name=".TickReciever" />
         <receiver
-            android:name = "com.example.android.allocate.alarms.TimerDoneReceiver"
-            android:exported = "true">
+            android:name=".alarms.TimerDoneReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name = "android.intent.action.NOTIFY"/>
+                <action android:name="android.intent.action.NOTIFY" />
             </intent-filter>
         </receiver>
 
+        <activity android:name=".activities.ViewStatsActivity"></activity>
     </application>
 
 </manifest>

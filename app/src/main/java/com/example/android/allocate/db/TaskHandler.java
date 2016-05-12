@@ -33,6 +33,9 @@ public class TaskHandler {
         mTaskAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Counts down the task
+     */
     public void tick() {
         for(int i = 0; i < mDataset.size();i++){
             Task t = mDataset.get(i);

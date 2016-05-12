@@ -23,7 +23,7 @@ import com.example.android.allocate.task.Task;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Member variables for recycler view displays info
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -66,14 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setAdapter(mTaskHandler.getTaskAdapter());
 
+        // Floating action button for adding a new task
         fab = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startAddTaskActivity();
-            }
-        });
+        fab.setOnClickListener(this);
 
+        // Detects swipe in the Android recycler view
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
@@ -147,8 +144,24 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void startAddTaskActivity() {
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.fab_add:
+                startAddTaskActivity();
+                break;
+            case R.id.view_stats:
+
+        }
+    }
+
+    private void startAddTaskActivity() {
         Intent intent = new Intent(this, AddTaskActivity.class);
+        startActivity(intent);
+    }
+
+    private void startViewStatsActivity() {
+        Intent intent = new Intent(this, ViewStatsActivity.class);
         startActivity(intent);
     }
 }

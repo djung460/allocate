@@ -6,4 +6,5 @@
     <string name="task_description">Description</string>
     <string name="action_clear">Clear</string>
     <string name="tasks">Tasks</string>
+    <string name="view_stats">View Stats</string>
 </resources>
