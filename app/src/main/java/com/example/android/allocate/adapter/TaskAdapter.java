@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.android.allocate.R;
+import com.example.android.allocate.alarms.TimerDoneReceiver;
 import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
 
+import java.net.InterfaceAddress;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -75,9 +77,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         holder.mStartStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (mDataset.get(position).isRunning()) {
                     mDataset.get(position).pause();
+                    TimerDoneReceiver.cancelAlarm(mDataset.get(position).getId(),mDataset.get(position).getTitle());
                 } else {
                     mDataset.get(position).start();
                 }

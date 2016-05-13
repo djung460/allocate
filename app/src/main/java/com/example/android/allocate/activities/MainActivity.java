@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
 
         handler.postDelayed(runnable, 100);
-        timerDoneReceiver.cancelAlarms();
         mTaskHandler.resume();
     }
 

@@ -29,7 +29,5 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
         mTaskTitle = (TextView) itemView.findViewById(R.id.parent_list_item_task_title);
         mTaskTimeRemaining = (TextView) itemView.findViewById(R.id.parent_list_item_task_time);
         mStartStop = (ImageButton) itemView.findViewById(R.id.button_start_stop);
-//        mResetTaskButton = (ImageButton) itemView.findViewById(R.id.child_list_item_reset);
-
     }
 }

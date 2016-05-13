@@ -27,12 +27,11 @@ import java.util.List;
  * Once the alarm is finished recieves the broadcasted intent and handles it
  */
 public class TimerDoneReceiver extends WakefulBroadcastReceiver {
-    AlarmManager alarmManager;
-    List<PendingIntent> pendingIntentsList = new ArrayList<>();
-
+    static private AlarmManager alarmManager;
+    static private Context mContext;
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        mContext = context;
         Intent myIntent = new Intent(context, MainActivity.class);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -70,20 +69,24 @@ public class TimerDoneReceiver extends WakefulBroadcastReceiver {
     }
 
     public void setAlarms(Context context, long timeLeft, long id, String title) {
+        mContext = context;
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, TimerDoneReceiver.class);
         intent.putExtra("title",title);
         intent.putExtra("id",id);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,(int) id,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeLeft, pendingIntent);
-        pendingIntentsList.add(pendingIntent);
     }
 
-    public void cancelAlarms() {
+    static public void cancelAlarm(long id, String title) {
         if(alarmManager != null){
-            for(int i = 0; i < pendingIntentsList.size(); i++){
-                alarmManager.cancel(pendingIntentsList.get(i));
+                alarmManager = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(mContext, TimerDoneReceiver.class);
+                intent.putExtra("title",title);
+                intent.putExtra("id",id);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext,(int) id,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmManager.cancel(pendingIntent);
+                Log.i("TimerDoneReceiver","Alarm canceled");
             }
         }
-    }
 }
