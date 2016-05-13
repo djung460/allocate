@@ -8,7 +8,7 @@ import com.example.android.allocate.db.TaskHandler;
 import com.example.android.allocate.task.Task;
 
 /**
- * Created by Dooj on 2016-01-25.
+ * Created by David Jung on 2016-01-25.
  */
 public class TickReciever extends BroadcastReceiver {
     private TaskHandler mTaskHandler;

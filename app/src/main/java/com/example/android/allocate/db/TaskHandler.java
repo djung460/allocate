@@ -37,15 +37,14 @@ public class TaskHandler {
      * Counts down the task
      */
     public void tick() {
-        for(int i = 0; i < mDataset.size();i++){
+        for(int i = 0; i < mDataset.size();i++) {
             Task t = mDataset.get(i);
-            if(t.isRunning()){
+            if(t.isRunning()) {
                 t.setNumTicks(t.numTicks() + 1);
                 t.setTimeLeft(t.getTimeLeft() - 100);
                 if(t.numTicks() >= 10) {
                     t.setNumTicks(0);
                     mTaskAdapter.notifyItemChanged(i);
-
                     if (t.getTimeLeft() <= 0) {
                         t.setTimeLeft(0);
                         t.pause();

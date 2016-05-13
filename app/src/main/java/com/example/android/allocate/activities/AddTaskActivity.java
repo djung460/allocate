@@ -50,9 +50,6 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
         mTaskHandler = new TaskHandler(this);
-        //mDbHelper = new TaskDatabaseHelper(this);
-
-        editTextTitle = (EditText) findViewById(R.id.task_name);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.task_bar);
         setSupportActionBar(toolbar);
@@ -60,6 +57,8 @@ public class AddTaskActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
+
+        editTextTitle = (EditText) findViewById(R.id.task_name);
 
         textViewHrs = (TextView) findViewById(R.id.text_view_hrs);
         textViewMins = (TextView) findViewById(R.id.text_view_mins);
@@ -184,22 +183,5 @@ public class AddTaskActivity extends AppCompatActivity {
         long timeInitial = hours * HOURS_TO_MILLIS + minutes * MINUTES_TO_MILLIS + seconds * SECONDS_TO_MILLIS;
         Task task = new Task(System.currentTimeMillis(), title, false, timeInitial, timeInitial, 0);
         mTaskHandler.addTask(task);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.add_task,
-                    container, false);
-            return rootView;
-        }
     }
 }

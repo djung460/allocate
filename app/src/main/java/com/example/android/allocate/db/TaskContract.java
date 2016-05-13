@@ -3,7 +3,7 @@ package com.example.android.allocate.db;
 import android.provider.BaseColumns;
 
 /**
- * Created by Dooj on 2015-12-30.
+ * Created by David Jung on 2015-12-30.
  */
 public final class TaskContract {
     // To prevent someone from accidentally instantiating the contract class,

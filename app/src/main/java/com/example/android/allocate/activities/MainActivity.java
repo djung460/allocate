@@ -132,6 +132,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.fab_add:
+                startAddTaskActivity();
+                break;
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
@@ -139,20 +148,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mTaskHandler.clearTask();
                 Toast.makeText(MainActivity.this, "Task Cleared", Toast.LENGTH_SHORT).show();
                 break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.fab_add:
-                startAddTaskActivity();
-                break;
             case R.id.view_stats:
-
+                startViewStatsActivity();
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void startAddTaskActivity() {
