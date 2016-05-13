@@ -14,3 +14,7 @@ A straightforward todo app that works by allocating time to each task.
 ## Background
 This was made since this is the way I study and realized there wasn't an app that did this. Currently using it as a platform to learn Android development.
 
+## Screenshots
+![Alt text](app_screenshots/device-2016-05-13-160118.png?raw=true "The List of Tasks")
+![Alt text](app_screenshots/device-2016-05-13-160022.png?raw=true "Entering a New Task")
+![Alt text](app_screenshots/device-2016-05-13-161525.png?raw=true "Viewing Stats")
