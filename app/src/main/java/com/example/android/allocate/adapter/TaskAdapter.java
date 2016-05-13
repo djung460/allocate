@@ -77,11 +77,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         holder.mStartStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDataset.get(position).isRunning()) {
-                    mDataset.get(position).pause();
-                    TimerDoneReceiver.cancelAlarm(mDataset.get(position).getId(),mDataset.get(position).getTitle());
+                Task t = mDataset.get(position);
+                if (t.isRunning()) {
+                    t.pause();
+                    TimerDoneReceiver.cancelAlarm(t.getId(),t.getTitle());
                 } else {
-                    mDataset.get(position).start();
+                    t.start();
+                    TimerDoneReceiver.setAlarm(mContext,t.getTimeLeft(),t.getId(),t.getTitle());
                 }
                 notifyItemChanged(position);
             }

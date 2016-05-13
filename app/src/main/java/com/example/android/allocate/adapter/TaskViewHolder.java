@@ -16,7 +16,6 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
     public TextView mTaskTitle;
     public TextView mTaskTimeRemaining;
     public ImageButton mStartStop;
-//    public ImageButton   mResetTaskButton;
 
 
     /**

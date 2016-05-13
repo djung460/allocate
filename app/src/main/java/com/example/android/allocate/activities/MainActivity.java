@@ -105,12 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         handler.removeCallbacks(runnable);
 
-        for (Task t : mTaskHandler.getDataset()) {
-            if (t.isRunning()) {
-                timerDoneReceiver.setAlarms(this, t.getTimeLeft(), t.getId(), t.getTitle());
-            }
-        }
-
         mTaskHandler.pause();
     }
 

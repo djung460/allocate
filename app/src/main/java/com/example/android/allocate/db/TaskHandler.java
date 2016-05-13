@@ -58,6 +58,7 @@ public class TaskHandler {
         mTimePaused = System.currentTimeMillis();
         updateDatabase();
         refresh();
+        mTaskDatabaseHelper.close();
     }
 
     public void resume() {

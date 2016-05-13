@@ -68,7 +68,7 @@ public class TimerDoneReceiver extends WakefulBroadcastReceiver {
         Log.i("TASK DONE", "TRIGGERED");
     }
 
-    public void setAlarms(Context context, long timeLeft, long id, String title) {
+    static public void setAlarm(Context context, long timeLeft, long id, String title) {
         mContext = context;
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, TimerDoneReceiver.class);
