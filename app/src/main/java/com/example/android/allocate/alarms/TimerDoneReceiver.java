@@ -29,6 +29,7 @@ import java.util.List;
 public class TimerDoneReceiver extends WakefulBroadcastReceiver {
     static private AlarmManager alarmManager;
     static private Context mContext;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context;
